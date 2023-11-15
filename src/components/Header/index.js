@@ -40,19 +40,21 @@ const Header = props => {
           <h1>
             <Link to="/">UNI Resto Cafe</Link>
           </h1>
-          <p>Myorders</p>
-          <button type="button" onClick={clic} className="cartButton">
-            <AiOutlineShoppingCart className="cart" />
-            {renderCartItemsCount()}
-          </button>
+          <div className="cartAndLogout">
+            <p>Myorders</p>
+            <button type="button" onClick={clic} className="cartButton">
+              <AiOutlineShoppingCart className="cart" />
+              {renderCartItemsCount()}
+            </button>
 
-          <button
-            type="button"
-            className="logout-desktop-btn"
-            onClick={onClickLogout}
-          >
-            Logout
-          </button>
+            <button
+              type="button"
+              className="logout-desktop-btn"
+              onClick={onClickLogout}
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>

@@ -10,13 +10,7 @@ class Itemtype extends Component {
       <CartContext.Consumer>
         {value => {
           const {details} = this.props
-          const {quantity} = this.state
-          const {
-            addCartItem,
-            incrementCartItemQuantity,
-            removeCartItem,
-            decrementCartItemQuantity,
-          } = value
+          const {addCartItem} = value
 
           const l = {
             id: details.dish_id,
