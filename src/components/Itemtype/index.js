@@ -1,5 +1,4 @@
 import {Component} from 'react'
-
 import CartContext from '../../context/CartContext'
 
 class Itemtype extends Component {
