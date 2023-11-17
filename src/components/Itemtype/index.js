@@ -3,19 +3,50 @@ import {Component} from 'react'
 import CartContext from '../../context/CartContext'
 
 class Itemtype extends Component {
-  state = {quantity: 0}
+  state = {n: 0}
+
+  inc = () => {
+    const {n} = this.state
+    this.setState(pre => ({
+      n: pre.n + 1,
+    }))
+  }
+
+  dec = () => {
+    const {n} = this.state
+    this.setState(pre => ({
+      n: pre.n - 1 < 0 ? 0 : pre.n - 1,
+    }))
+  }
 
   render() {
     return (
       <CartContext.Consumer>
         {value => {
           const {details} = this.props
-
-          const {addCartItem, cartList} = value
+          const {n} = this.state
+          const {addCartItem, decrementCartItemQuantity, cartList} = value
           const add = () => {
             addCartItem({...details, quantity: 1})
+            this.inc()
+          }
+          const decc = () => {
+            decrementCartItemQuantity(details.dish_id)
+            this.dec()
           }
           console.log(cartList)
+
+          const cartButtons = () => (
+            <div className="buttons">
+              <button type="button" className="NButtons" onClick={decc}>
+                -
+              </button>
+              <span className="spanCount">{n}</span>
+              <button type="button" className="pButtons" onClick={add}>
+                +
+              </button>
+            </div>
+          )
 
           return (
             <li>
@@ -37,15 +68,7 @@ class Itemtype extends Component {
                         </p>
                       </div>
                       <p>{details.dish_description}</p>
-                      {details.dish_Availability && (
-                        <button
-                          type="button"
-                          className="addCartbtn"
-                          onClick={add}
-                        >
-                          ADD TO CART
-                        </button>
-                      )}
+                      {details.dish_Availability && cartButtons()}
                       {details.addonCat.length > 0 && (
                         <p>Customization available</p>
                       )}

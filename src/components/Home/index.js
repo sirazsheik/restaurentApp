@@ -4,11 +4,8 @@ import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 
 import Itemtype from '../Itemtype'
-
 import CartContext from '../../context/CartContext'
-
 import Header from '../Header'
-
 import './index.css'
 
 const apiStatusConstants = {
@@ -62,8 +59,11 @@ class Home extends Component {
         const filArray = list[0].table_menu_list.filter(
           each => each.menu_category === status,
         )
+        const {cartList} = value
+        const cartItemsCount = cartList.length
         return (
           <>
+            <Header details={list[0].restaurant_name} />
             <div className="buttonCont">
               {list[0].table_menu_list.map(each => {
                 const change = () => {
@@ -88,6 +88,7 @@ class Home extends Component {
                 <Itemtype details={each} key={each.dish_id} />
               ))}
             </ul>
+            {cartItemsCount && <button type="button">ADD TO CART</button>}
           </>
         )
       }}
@@ -96,7 +97,6 @@ class Home extends Component {
 
   renderProductDetails = () => {
     const {apiStatus} = this.state
-
     switch (apiStatus) {
       case apiStatusConstants.success:
         return this.renderProductDetailsView()
@@ -112,7 +112,6 @@ class Home extends Component {
   render() {
     return (
       <>
-        <Header />
         <div className="product-item-details-container">
           {this.renderProductDetails()}
         </div>

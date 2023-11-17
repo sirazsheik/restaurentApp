@@ -4,6 +4,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import LoginForm from './components/LoginForm'
 import Home from './components/Home'
 import Cart from './components/Cart'
+import NotFound from './components/NotFound'
 import CartContext from './context/CartContext'
 
 import './App.css'
@@ -54,7 +55,6 @@ class App extends Component {
     const updatedCartList = cartList.filter(
       eachCartItem => eachCartItem.dish_id !== id,
     )
-
     this.setState({cartList: updatedCartList})
   }
 
@@ -100,6 +100,8 @@ class App extends Component {
           <Route exact path="/login" component={LoginForm} />
           <ProtectedRoute exact path="/" component={Home} />
           <ProtectedRoute exact path="/cart" component={Cart} />
+          <Route path="/not-found" component={NotFound} />
+          <Redirect to="not-found" />
         </Switch>
       </CartContext.Provider>
     )

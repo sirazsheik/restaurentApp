@@ -32,7 +32,8 @@ const Header = props => {
     const {history} = props
     history.push('/cart')
   }
-
+  const {details} = props
+  console.log(details)
   return (
     <nav className="nav-header">
       <div className="nav-content">
