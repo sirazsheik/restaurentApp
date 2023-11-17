@@ -10,19 +10,12 @@ class Itemtype extends Component {
       <CartContext.Consumer>
         {value => {
           const {details} = this.props
-          const {addCartItem} = value
 
-          const l = {
-            id: details.dish_id,
-            dishName: details.dish_name,
-            quantity: 1,
-            price: details.dish_price,
-            dishImage: details.dish_image,
-          }
-
+          const {addCartItem, cartList} = value
           const add = () => {
-            addCartItem(l)
+            addCartItem({...details, quantity: 1})
           }
+          console.log(cartList)
 
           return (
             <li>

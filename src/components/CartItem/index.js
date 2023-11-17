@@ -1,4 +1,3 @@
-import {BsPlusSquare, BsDashSquare} from 'react-icons/bs'
 import {AiFillCloseCircle} from 'react-icons/ai'
 
 import CartContext from '../../context/CartContext'
@@ -14,24 +13,27 @@ const CartItem = props => (
         decrementCartItemQuantity,
       } = value
       const {cartItemDetails} = props
-      const {id, dishName, quantity, price, dishImage} = cartItemDetails
+
       const onClickDecrement = () => {
-        decrementCartItemQuantity(id)
+        decrementCartItemQuantity(cartItemDetails.dish_id)
       }
       const onClickIncrement = () => {
-        incrementCartItemQuantity(id)
+        incrementCartItemQuantity(cartItemDetails.dish_id)
       }
       const onRemoveCartItem = () => {
-        removeCartItem(id)
+        removeCartItem(cartItemDetails.dish_id)
       }
-      const totalPrice = price * quantity
-
+      const totalPrice = cartItemDetails.quantity * cartItemDetails.dish_price
       return (
         <li className="cart-item">
-          <img className="cart-product-image" src={dishImage} alt={dishName} />
+          <img
+            className="cart-product-image"
+            src={cartItemDetails.dish_image}
+            alt={cartItemDetails.dish_name}
+          />
           <div className="cart-item-details-container">
             <div className="cart-product-title-brand-container">
-              <p className="cart-product-title">{dishName}</p>
+              <p className="cart-product-title">{cartItemDetails.dish_name}</p>
             </div>
             <div className="cart-quantity-container">
               <button
@@ -42,7 +44,7 @@ const CartItem = props => (
               >
                 -
               </button>
-              <p className="cart-quantity">{quantity}</p>
+              <p className="cart-quantity">{cartItemDetails.quantity}</p>
               <button
                 type="button"
                 className="quantity-controller-button"
@@ -53,7 +55,10 @@ const CartItem = props => (
               </button>
             </div>
             <div className="total-price-remove-container">
-              <p className="cart-total-price">Rs {totalPrice}/-</p>
+              <p className="cart-total-price">
+                {' '}
+                {cartItemDetails.dish_currency} {totalPrice}/-
+              </p>
               <button
                 className="remove-button"
                 type="button"

@@ -35,7 +35,6 @@ class Home extends Component {
     })
     const jwtToken = Cookies.get('jwt_token')
     const apiUrl = `https://run.mocky.io/v3/77a7e71b-804a-4fbd-822c-3e365d3482cc`
-
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()

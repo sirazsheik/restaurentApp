@@ -20,7 +20,7 @@ class App extends Component {
   incrementCartItemQuantity = id => {
     this.setState(prevState => ({
       cartList: prevState.cartList.map(eachCartItem => {
-        if (id === eachCartItem.id) {
+        if (id === eachCartItem.dish_id) {
           const updatedQuantity = eachCartItem.quantity + 1
           return {...eachCartItem, quantity: updatedQuantity}
         }
@@ -31,11 +31,13 @@ class App extends Component {
 
   decrementCartItemQuantity = id => {
     const {cartList} = this.state
-    const productObject = cartList.find(eachCartItem => eachCartItem.id === id)
+    const productObject = cartList.find(
+      eachCartItem => eachCartItem.dish_id === id,
+    )
     if (productObject.quantity > 1) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachCartItem => {
-          if (id === eachCartItem.id) {
+          if (id === eachCartItem.dish_id) {
             const updatedQuantity = eachCartItem.quantity - 1
             return {...eachCartItem, quantity: updatedQuantity}
           }
@@ -50,7 +52,7 @@ class App extends Component {
   removeCartItem = id => {
     const {cartList} = this.state
     const updatedCartList = cartList.filter(
-      eachCartItem => eachCartItem.id !== id,
+      eachCartItem => eachCartItem.dish_id !== id,
     )
 
     this.setState({cartList: updatedCartList})
@@ -59,13 +61,13 @@ class App extends Component {
   addCartItem = product => {
     const {cartList} = this.state
     const productObject = cartList.find(
-      eachCartItem => eachCartItem.id === product.id,
+      eachCartItem => eachCartItem.dish_id === product.dish_id,
     )
 
     if (productObject) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachCartItem => {
-          if (productObject.id === eachCartItem.id) {
+          if (productObject.dish_id === eachCartItem.dish_id) {
             const updatedQuantity = eachCartItem.quantity + product.quantity
 
             return {...eachCartItem, quantity: updatedQuantity}
