@@ -35,6 +35,8 @@ class Home extends Component {
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()
+      Cookies.set('Name', fetchedData[0].restaurant_name)
+      console.log(fetchedData[0].restaurant_name)
       this.setState({
         list: fetchedData,
         apiStatus: apiStatusConstants.success,
@@ -88,7 +90,6 @@ class Home extends Component {
                 <Itemtype details={each} key={each.dish_id} />
               ))}
             </ul>
-            {cartItemsCount && <button type="button">ADD TO CART</button>}
           </>
         )
       }}

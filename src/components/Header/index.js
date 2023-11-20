@@ -38,9 +38,10 @@ const Header = props => {
     <nav className="nav-header">
       <div className="nav-content">
         <div className="nav-bar-large-container">
-          <h1>
-            <Link to="/">UNI Resto Cafe</Link>
-          </h1>
+          <Link to="/">
+            <h1>{Cookies.get('Name')}</h1>
+          </Link>
+
           <div className="cartAndLogout">
             <p>Myorders</p>
             <button type="button" onClick={clic} className="cartButton">
