@@ -35,8 +35,6 @@ class Home extends Component {
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()
-      Cookies.set('Name', fetchedData[0].restaurant_name)
-      console.log(fetchedData[0].restaurant_name)
       this.setState({
         list: fetchedData,
         apiStatus: apiStatusConstants.success,
@@ -61,7 +59,10 @@ class Home extends Component {
         const filArray = list[0].table_menu_list.filter(
           each => each.menu_category === status,
         )
-        const {cartList} = value
+        const {cartList, heading, addHeading} = value
+        if (heading === '') {
+          addHeading(list[0].restaurant_name)
+        }
         const cartItemsCount = cartList.length
         return (
           <>

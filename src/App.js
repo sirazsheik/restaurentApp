@@ -3,7 +3,6 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import LoginForm from './components/LoginForm'
 import Home from './components/Home'
-import Header from './components/Header'
 import Cart from './components/Cart'
 import NotFound from './components/NotFound'
 import CartContext from './context/CartContext'
@@ -13,6 +12,7 @@ import './App.css'
 class App extends Component {
   state = {
     cartList: [],
+    heading: '',
   }
 
   removeAllCartItems = () => {
@@ -51,12 +51,36 @@ class App extends Component {
     }
   }
 
+  addHeading = tex => {
+    this.setState({heading: tex})
+  }
+
   removeCartItem = id => {
     const {cartList} = this.state
     const updatedCartList = cartList.filter(
       eachCartItem => eachCartItem.dish_id !== id,
     )
     this.setState({cartList: updatedCartList})
+  }
+
+  changeCartQuantity = product => {
+    const {id, n} = product
+    if (n === 0) {
+      this.removeCartItem(id)
+    } else {
+      const {cartList} = this.state
+      const productObject = cartList.find(
+        eachCartItem => eachCartItem.dish_id === id,
+      )
+      this.setState(prevState => ({
+        cartList: prevState.cartList.map(eachCartItem => {
+          if (id === eachCartItem.dish_id) {
+            return {...eachCartItem, quantity: n}
+          }
+          return eachCartItem
+        }),
+      }))
+    }
   }
 
   addCartItem = product => {
@@ -85,14 +109,17 @@ class App extends Component {
   }
 
   render() {
-    const {cartList} = this.state
+    const {cartList, heading} = this.state
     return (
       <CartContext.Provider
         value={{
           cartList,
+          heading,
+          addHeading: this.addHeading,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
           incrementCartItemQuantity: this.incrementCartItemQuantity,
+          changeCartQuantity: this.changeCartQuantity,
           decrementCartItemQuantity: this.decrementCartItemQuantity,
           removeAllCartItems: this.removeAllCartItems,
         }}

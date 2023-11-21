@@ -19,6 +19,10 @@ class Itemtype extends Component {
     }))
   }
 
+  changeN = num => {
+    this.setState({n: num})
+  }
+
   render() {
     return (
       <CartContext.Consumer>
@@ -26,13 +30,26 @@ class Itemtype extends Component {
           const {details} = this.props
           const {n} = this.state
           console.log(n)
-          const {addCartItem, cartList} = value
+          const {addCartItem, cartList, changeCartQuantity} = value
           const filterQuantity = cartList.find(
             each => each.dish_id === details.dish_id,
           )
+          if (
+            filterQuantity !== undefined &&
+            filterQuantity.dish_id === details.dish_id
+          ) {
+            if (n !== filterQuantity.quantity && n === 0) {
+              this.changeN(filterQuantity.quantity)
+            }
+          }
 
           const add = () => {
-            if (n > 0) {
+            if (
+              filterQuantity !== undefined &&
+              filterQuantity.dish_id === details.dish_id
+            ) {
+              changeCartQuantity({id: details.dish_id, n})
+            } else {
               addCartItem({...details, quantity: n})
             }
           }
