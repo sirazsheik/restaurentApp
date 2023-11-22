@@ -14,26 +14,28 @@ const CartItem = props => (
       } = value
       const {cartItemDetails} = props
 
+      const dishName = cartItemDetails.dish_name
+      const dishImage = cartItemDetails.dish_image
       const onClickDecrement = () => {
-        decrementCartItemQuantity(cartItemDetails.dish_id)
+        decrementCartItemQuantity(cartItemDetails.dishId)
       }
       const onClickIncrement = () => {
-        incrementCartItemQuantity(cartItemDetails.dish_id)
+        incrementCartItemQuantity(cartItemDetails.dishId)
       }
       const onRemoveCartItem = () => {
-        removeCartItem(cartItemDetails.dish_id)
+        removeCartItem(cartItemDetails.dishId)
       }
       const totalPrice = cartItemDetails.quantity * cartItemDetails.dish_price
       return (
         <li className="cart-item">
           <img
             className="cart-product-image"
-            src={cartItemDetails.dish_image}
-            alt={cartItemDetails.dish_name}
+            src={cartItemDetails.dishImage}
+            alt={cartItemDetails.dishName}
           />
           <div className="cart-item-details-container">
             <div className="cart-product-title-brand-container">
-              <p className="cart-product-title">{cartItemDetails.dish_name}</p>
+              <p className="cart-product-title">{cartItemDetails.dishName}</p>
             </div>
             <div className="cart-quantity-container">
               <button
@@ -57,7 +59,7 @@ const CartItem = props => (
             <div className="total-price-remove-container">
               <p className="cart-total-price">
                 {' '}
-                {cartItemDetails.dish_currency} {totalPrice}/-
+                {cartItemDetails.dishCurrencyy} {totalPrice}/-
               </p>
               <button
                 className="remove-button"

@@ -18,7 +18,7 @@ const apiStatusConstants = {
 class Home extends Component {
   state = {
     list: [],
-    status: 'Salads and Soup',
+    status: '',
     apiStatus: apiStatusConstants.initial,
   }
 
@@ -35,8 +35,11 @@ class Home extends Component {
     const response = await fetch(apiUrl)
     if (response.ok) {
       const fetchedData = await response.json()
+      console.log(fetchedData[0].table_menu_list[0].menu_category)
       this.setState({
         list: fetchedData,
+        status: fetchedData[0].table_menu_list[0].menu_category,
+
         apiStatus: apiStatusConstants.success,
       })
     }
@@ -59,14 +62,13 @@ class Home extends Component {
         const filArray = list[0].table_menu_list.filter(
           each => each.menu_category === status,
         )
-        const {cartList, heading, addHeading} = value
+        const {addHeading, heading} = value
         if (heading === '') {
           addHeading(list[0].restaurant_name)
         }
-        const cartItemsCount = cartList.length
         return (
           <>
-            <Header details={list[0].restaurant_name} />
+            <Header />
             <div className="buttonCont">
               {list[0].table_menu_list.map(each => {
                 const change = () => {

@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import {Route, Switch, Redirect} from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
-import LoginForm from './components/LoginForm'
+import Login from './components/Login'
 import Home from './components/Home'
 import Cart from './components/Cart'
 import NotFound from './components/NotFound'
@@ -22,7 +22,7 @@ class App extends Component {
   incrementCartItemQuantity = id => {
     this.setState(prevState => ({
       cartList: prevState.cartList.map(eachCartItem => {
-        if (id === eachCartItem.dish_id) {
+        if (id === eachCartItem.dishId) {
           const updatedQuantity = eachCartItem.quantity + 1
           return {...eachCartItem, quantity: updatedQuantity}
         }
@@ -34,12 +34,12 @@ class App extends Component {
   decrementCartItemQuantity = id => {
     const {cartList} = this.state
     const productObject = cartList.find(
-      eachCartItem => eachCartItem.dish_id === id,
+      eachCartItem => eachCartItem.dishId === id,
     )
     if (productObject.quantity > 1) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachCartItem => {
-          if (id === eachCartItem.dish_id) {
+          if (id === eachCartItem.dishId) {
             const updatedQuantity = eachCartItem.quantity - 1
             return {...eachCartItem, quantity: updatedQuantity}
           }
@@ -58,7 +58,7 @@ class App extends Component {
   removeCartItem = id => {
     const {cartList} = this.state
     const updatedCartList = cartList.filter(
-      eachCartItem => eachCartItem.dish_id !== id,
+      eachCartItem => eachCartItem.dishId !== id,
     )
     this.setState({cartList: updatedCartList})
   }
@@ -70,11 +70,11 @@ class App extends Component {
     } else {
       const {cartList} = this.state
       const productObject = cartList.find(
-        eachCartItem => eachCartItem.dish_id === id,
+        eachCartItem => eachCartItem.dishId === id,
       )
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachCartItem => {
-          if (id === eachCartItem.dish_id) {
+          if (id === eachCartItem.dishId) {
             return {...eachCartItem, quantity: n}
           }
           return eachCartItem
@@ -86,13 +86,13 @@ class App extends Component {
   addCartItem = product => {
     const {cartList} = this.state
     const productObject = cartList.find(
-      eachCartItem => eachCartItem.dish_id === product.dish_id,
+      eachCartItem => eachCartItem.dishId === product.dishId,
     )
 
     if (productObject) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachCartItem => {
-          if (productObject.dish_id === eachCartItem.dish_id) {
+          if (productObject.dishId === eachCartItem.dishId) {
             const updatedQuantity = eachCartItem.quantity + product.quantity
 
             return {...eachCartItem, quantity: updatedQuantity}
@@ -125,7 +125,7 @@ class App extends Component {
         }}
       >
         <Switch>
-          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/login" component={Login} />
           <ProtectedRoute exact path="/" component={Home} />
           <ProtectedRoute exact path="/cart" component={Cart} />
           <Route path="/not-found" component={NotFound} />

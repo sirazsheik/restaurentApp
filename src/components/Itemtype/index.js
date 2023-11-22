@@ -32,11 +32,11 @@ class Itemtype extends Component {
           console.log(n)
           const {addCartItem, cartList, changeCartQuantity} = value
           const filterQuantity = cartList.find(
-            each => each.dish_id === details.dish_id,
+            each => each.dishId === details.dish_id,
           )
           if (
             filterQuantity !== undefined &&
-            filterQuantity.dish_id === details.dish_id
+            filterQuantity.dishId === details.dish_id
           ) {
             if (n !== filterQuantity.quantity && n === 0) {
               this.changeN(filterQuantity.quantity)
@@ -44,13 +44,20 @@ class Itemtype extends Component {
           }
 
           const add = () => {
+            const data = {
+              dishId: details.dish_id,
+              dishName: details.dish_name,
+              dishImage: details.dish_image,
+              dishPrice: details.dish_price,
+              dishCurrency: details.dish_currency,
+            }
             if (
               filterQuantity !== undefined &&
               filterQuantity.dish_id === details.dish_id
             ) {
               changeCartQuantity({id: details.dish_id, n})
             } else {
-              addCartItem({...details, quantity: n})
+              addCartItem({...data, quantity: n})
             }
           }
           const cartButtons = () => (
